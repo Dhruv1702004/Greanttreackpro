@@ -1,0 +1,14 @@
+# Node modules (Ye kabhi upload nahi honi chahiye)
+node_modules/
+
+# Database file (Taaki local data online server se clash na ho)
+granttrack.db
+
+# Logs and environment files
+*.log
+.env
+.DS_Store
+
+# Build files (Agar ho)
+dist/
+build/

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrantTrack Pro - Smart Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        .header-gradient { background: linear-gradient(135deg, #1b2d55, #1845c2); }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .neo-shadow {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1845c2, #10b981);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900">
+ 
+    <header class="header-gradient text-white p-6 shadow-xl sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <img src="logo.png" alt="GrantTrack Pro Logo" class="h-12 w-auto object-contain onerror-fallback" onerror="this.style.display='none'; document.getElementById('text-logo').classList.remove('hidden')">
+                <div id="text-logo" class="hidden">
+                    <h1 class="text-3xl font-extrabold tracking-tight">GrantTrack Pro</h1>
+                </div>
+                <div class="hidden sm:block border-l border-white/20 pl-3 ml-1">
+                    <p class="text-xs uppercase tracking-widest opacity-80 mt-1 font-bold">Smart Analytics</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-4 items-center">
+                <a href="index.html" class="bg-white/20 hover:bg-white/30 text-white px-5 py-2.5 rounded-xl font-bold transition flex items-center gap-2">
+                    <i class="fa-solid fa-house" aria-hidden="true"></i> index
+                </a>
+                <a href="LiveRecords.html" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-5 py-2.5 rounded-xl font-bold transition shadow-md flex items-center gap-2">
+                    <i class="fa-solid fa-database" aria-hidden="true"></i> Live Records
+                </a>
+                <a href="SchoolHub.html" class="bg-white/20 hover:bg-white/30 text-white px-5 py-2.5 rounded-xl font-bold transition flex items-center gap-2">
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i> SchoolHub
+                </a>
+                 <a href="CashbookHub.html" class="bg-white/20 hover:bg-white/30 text-white px-5 py-2.5 rounded-xl font-bold transition flex items-center gap-2">
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i> CashbookHub
+                </a>
+                
+            </div>
+        </div>
+    </header>
+ 
+    <main class="flex-grow max-w-7xl mx-auto w-full p-6 my-6 space-y-8">
+        
+        <section class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
+            <div>
+                <h2 class="text-3xl font-black text-slate-800 tracking-tight">📊 Smart Analytics Dashboard</h2>
+                <p class="text-slate-500 mt-1">Real-time grant allocation insights, SMC tracking, and institutional fund summaries.</p>
+            </div>
+            <div class="bg-slate-50 px-4 py-2 rounded-2xl border border-slate-200/60 text-sm font-semibold text-slate-600 flex items-center gap-2">
+                <i class="fa-regular fa-calendar-days text-blue-600" aria-hidden="true"></i>
+                <span id="liveDate">Loading Date...</span>
+            </div>
+        </section>
+ 
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="glass-card p-6 rounded-3xl border border-slate-100 neo-shadow flex items-center justify-between group hover:border-blue-500/30 transition-all duration-300">
+                <div class="space-y-2">
+                    <p class="text-sm font-bold text-slate-400 uppercase tracking-wider">Total Schools</p>
+                    <h3 id="countSchools" class="text-3xl font-black text-slate-800">0</h3>
+                </div>
+                <div class="h-14 w-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-school" aria-hidden="true"></i>
+                </div>
+            </div>
+ 
+            <div class="glass-card p-6 rounded-3xl border border-slate-100 neo-shadow flex items-center justify-between group hover:border-emerald-500/30 transition-all duration-300">
+                <div class="space-y-2">
+                    <p class="text-sm font-bold text-slate-400 uppercase tracking-wider">Total Funds</p>
+                    <h3 id="countTotalAmount" class="text-3xl font-black text-emerald-600">₹ 0</h3>
+                </div>
+                <div class="h-14 w-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-wallet" aria-hidden="true"></i>
+                </div>
+            </div>
+ 
+            <div class="glass-card p-6 rounded-3xl border border-slate-100 neo-shadow flex items-center justify-between group hover:border-purple-500/30 transition-all duration-300">
+                <div class="space-y-2">
+                    <p class="text-sm font-bold text-slate-400 uppercase tracking-wider">SMC Allocation</p>
+                    <h3 id="countSMC" class="text-3xl font-black text-purple-600">₹ 0</h3>
+                </div>
+                <div class="h-14 w-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-users-gear" aria-hidden="true"></i>
+                </div>
+            </div>
+ 
+            <div class="glass-card p-6 rounded-3xl border border-slate-100 neo-shadow flex items-center justify-between group hover:border-amber-500/30 transition-all duration-300">
+                <div class="space-y-2">
+                    <p class="text-sm font-bold text-slate-400 uppercase tracking-wider">Education Dept</p>
+                    <h3 id="countEducation" class="text-3xl font-black text-amber-600">₹ 0</h3>
+                </div>
+                <div class="h-14 w-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl group-hover:bg-amber-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+                </div>
+            </div>
+        </section>
+ 
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 neo-shadow space-y-4">
+                <div class="flex justify-between items-center border-b pb-3">
+                    <h4 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+                        <i class="fa-solid fa-chart-bar text-blue-600" aria-hidden="true"></i> School Wise Fund Summary
+                    </h4>
+                    <span class="text-xs font-bold text-slate-400 uppercase bg-slate-50 px-2.5 py-1 rounded-md">Live</span>
+                </div>
+                <div class="relative min-h-[300px] w-full flex items-center justify-center">
+                    <canvas id="schoolBarChart"></canvas>
+                </div>
+            </div>
+ 
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 neo-shadow space-y-4">
+                <div class="flex justify-between items-center border-b pb-3">
+                    <h4 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-emerald-600" aria-hidden="true"></i> Category Wise Budget Share
+                    </h4>
+                    <span class="text-xs font-bold text-slate-400 uppercase bg-slate-50 px-2.5 py-1 rounded-md">Percentage</span>
+                </div>
+                <div class="relative min-h-[300px] max-h-[300px] w-full flex items-center justify-center">
+                    <canvas id="categoryDoughnutChart"></canvas>
+                </div>
+            </div>
+        </section>
+ 
+        <section class="bg-white rounded-3xl border border-slate-100 neo-shadow p-6 space-y-4">
+            <h4 class="font-bold text-slate-800 text-lg flex items-center gap-2 border-b pb-3">
+                <i class="fa-solid fa-list-check text-indigo-600" aria-hidden="true"></i> Top Strategic Allocations
+            </h4>
+            <div class="overflow-x-auto rounded-xl">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-800 text-white text-sm">
+                            <th class="p-4 rounded-l-xl">School Name</th>
+                            <th class="p-4">UDISE Code</th>
+                            <th class="p-4">Primary Category</th>
+                            <th class="p-4 rounded-r-xl text-right">Total Invested Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dashboardTableBody" class="text-sm divide-y divide-slate-100">
+                        <tr>
+                            <td colspan="4" class="p-8 text-center text-slate-400 italic">Calculating database insight matrix...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+ 
+    </main>
+ 
+    <footer class="bg-slate-900 text-slate-400 p-6 text-center mt-auto">
+        <p class="text-sm font-bold text-white">&copy; 2026 GrantTrack Pro. All rights reserved.</p>
+    </footer>
+ 
+    <script>
+        // Keep references to chart instances so we can destroy them before re-rendering
+        // (Fix: prevents "Canvas is already in use" error if initializeDashboard() runs again)
+        let barChartInstance = null;
+        let doughnutChartInstance = null;
+ 
+        document.addEventListener("DOMContentLoaded", () => {
+            // Display live local time
+            document.getElementById('liveDate').innerText = new Date().toLocaleString('en-IN', { dateStyle: 'long' });
+            initializeDashboard();
+        });
+ 
+        // Fix: simple HTML-escape helper to prevent XSS when injecting DB values into innerHTML
+        function escapeHtml(value) {
+            const div = document.createElement('div');
+            div.textContent = value === null || value === undefined ? '' : String(value);
+            return div.innerHTML;
+        }
+ 
+        async function initializeDashboard() {
+            try {
+                // Fetch direct database data from API (SQLite-backed)
+                const response = await fetch('/api/records');
+                if (!response.ok) {
+                    throw new Error('Network response was not OK: ' + response.status);
+                }
+                const data = await response.json();
+ 
+                if (!data.records || data.records.length === 0) {
+                    showEmptyDashboard();
+                    return;
+                }
+ 
+                let totalSchools = data.records.length;
+                let totalFunds = 0;
+                let smcTotal = 0;
+                let educationTotal = 0;
+ 
+                // Fix: dynamic category aggregation instead of only SMC/Education hardcoded
+                let categoryTotals = {};
+ 
+                let schoolNames = [];
+                let schoolFundSums = [];
+                let tableRowsHtml = "";
+ 
+                data.records.forEach(school => {
+                    let schoolTotal = 0;
+                    schoolNames.push(school.name);
+ 
+                    if (school.entries && school.entries.length > 0) {
+                        school.entries.forEach(entry => {
+                            let amt = parseFloat(entry.amount || 0);
+                            if (isNaN(amt)) amt = 0; // Fix: guard against bad/non-numeric amounts
+                            schoolTotal += amt;
+                            totalFunds += amt;
+ 
+                            // Sort totals by section, but also track every category dynamically
+                            const sectionKey = entry.section || 'General';
+                            categoryTotals[sectionKey] = (categoryTotals[sectionKey] || 0) + amt;
+ 
+                            if (sectionKey === 'SMC') smcTotal += amt;
+                            else if (sectionKey === 'Education') educationTotal += amt;
+                        });
+                    }
+                    schoolFundSums.push(schoolTotal);
+ 
+                    // Add details into insights overview table (Fix: escape all DB-derived strings)
+                    tableRowsHtml += `
+                        <tr class="hover:bg-slate-50 transition duration-150">
+                            <td class="p-4 font-semibold text-slate-700">${escapeHtml(school.name)}</td>
+                            <td class="p-4 text-slate-500 font-mono text-xs">${escapeHtml(school.code)}</td>
+                            <td class="p-4">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-100 uppercase">${escapeHtml(school.grantType || 'General')}</span>
+                            </td>
+                            <td class="p-4 text-right font-black text-slate-800">₹ ${schoolTotal.toLocaleString('en-IN')}</td>
+                        </tr>
+                    `;
+                });
+ 
+                // Update Counter numbers dynamically
+                document.getElementById('countSchools').innerText = totalSchools;
+                document.getElementById('countTotalAmount').innerText = "₹ " + totalFunds.toLocaleString('en-IN');
+                document.getElementById('countSMC').innerText = "₹ " + smcTotal.toLocaleString('en-IN');
+                document.getElementById('countEducation').innerText = "₹ " + educationTotal.toLocaleString('en-IN');
+                
+                document.getElementById('dashboardTableBody').innerHTML = tableRowsHtml;
+ 
+                // Load Modern Analytics Charts
+                renderBarChart(schoolNames, schoolFundSums);
+ 
+                // Fix: build doughnut chart from dynamic categoryTotals instead of only 3 fixed buckets
+                renderDoughnutChart(categoryTotals);
+ 
+            } catch (error) {
+                console.error("Dashboard engine crashed:", error);
+                showEmptyDashboard("❌ Connection Failed");
+            }
+        }
+ 
+        function renderBarChart(labels, dataValues) {
+            const ctx = document.getElementById('schoolBarChart').getContext('2d');
+ 
+            // Fix: destroy previous chart instance before creating a new one
+            if (barChartInstance) {
+                barChartInstance.destroy();
+            }
+ 
+            barChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Allocated Budget (₹)',
+                        data: dataValues,
+                        backgroundColor: 'rgba(24, 69, 194, 0.85)',
+                        borderColor: '#1845c2',
+                        borderWidth: 2,
+                        borderRadius: 12,
+                        borderSkipped: false,
+                        hoverBackgroundColor: '#1b2d55'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' }, ticks: { font: { family: 'sans-serif', weight: 'bold' } } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+ 
+        function renderDoughnutChart(categoryTotals) {
+            const ctx = document.getElementById('categoryDoughnutChart').getContext('2d');
+ 
+            // Fix: destroy previous chart instance before creating a new one
+            if (doughnutChartInstance) {
+                doughnutChartInstance.destroy();
+            }
+ 
+            const palette = ['#c084fc', '#fbbf24', '#34d399', '#60a5fa', '#f87171', '#a3e635', '#fb923c', '#cbd5e1'];
+            const labels = Object.keys(categoryTotals);
+            const values = Object.values(categoryTotals);
+            const colors = labels.map((_, i) => palette[i % palette.length]);
+ 
+            doughnutChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: colors,
+                        borderWidth: 4,
+                        borderColor: '#ffffff',
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { weight: 'bold' }, padding: 20 } }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+ 
+        function showEmptyDashboard(msg = "❌ No Active Records found") {
+            document.getElementById('dashboardTableBody').innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-500 font-bold">${escapeHtml(msg)}</td></tr>`;
+        }
+    </script>
+</body>
+</html>
+ 

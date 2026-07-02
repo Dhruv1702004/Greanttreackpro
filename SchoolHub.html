@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrantTrack Pro - Master School & Bank Setup</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .header-gradient { background: linear-gradient(135deg, #0f172a, #1e293b); }
+        .card-shadow { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05); }
+        table { width: 100%; border-collapse: collapse; }
+        th { background-color: #f1f5f9; padding: 12px 10px; border: 1px solid #e2e8f0; font-size: 13px; text-align: center; color: #334155; font-weight: 700; }
+        td { padding: 10px; border: 1px solid #e2e8f0; text-align: center; font-size: 13px; background: white; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900">
+
+    <header class="header-gradient text-white p-5 shadow-lg">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-600 p-2.5 rounded-xl"><i class="fa-solid fa-school text-xl"></i></div>
+                <div>
+                    <h1 class="text-2xl font-black tracking-tight">GrantTrack Pro</h1>
+                    <p class="text-xs uppercase tracking-widest text-indigo-300 font-bold">માસ્ટર સેટઅપ પેનલ (School, Bank & Grant Setup)</p>
+                </div>
+            </div>
+            <div>
+                <button onclick="clearAllData()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl font-bold text-xs transition shadow flex items-center gap-2">
+                    <i class="fa-solid fa-trash-can"></i> બધો ડેટા સાફ કરો (Reset All)
+                </button>
+            </div>
+             <a href="LiveRecords.html" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-5 py-2.5 rounded-xl font-bold transition shadow-md flex items-center gap-2">
+                    <i class="fa-solid fa-database" aria-hidden="true"></i> Live Records
+                </a>
+            
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto w-full p-4 sm:p-6 space-y-10">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <div class="bg-white border p-6 rounded-2xl card-shadow space-y-4">
+                <h3 class="text-lg font-black text-slate-800 flex items-center gap-2 border-b pb-3">
+                    <i class="fa-solid fa-graduation-cap text-indigo-600"></i> ૧. શાળાની સામાન્ય વિગત (School Profile)
+                </h3>
+                <form id="schoolForm" onsubmit="saveSchoolProfile(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">શાળાનું નામ</label>
+                            <input type="text" id="schName" required class="w-full border rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">ડાયસ કોડ (DISE Code)</label>
+                            <input type="text" id="schDise" required class="w-full border rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">બ્લોક</label>
+                            <input type="text" id="schBlock" required class="w-full border rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">કલ્સ્ટર</label>
+                            <input type="text" id="schCluster" required class="w-full border rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">પે સેન્ટર શાળાનું નામ</label>
+                            <input type="text" id="schPaycenter" required class="w-full border rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">તાલુકો / જિલ્લો</label>
+                            <input type="text" id="schTaluka" required class="w-full border rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow">
+                        શાળાની વિગત સેવ કરો
+                    </button>
+                </form>
+            </div>
+
+            <div class="bg-white border p-6 rounded-2xl card-shadow space-y-4">
+                <h3 class="text-lg font-black text-slate-800 flex items-center gap-2 border-b pb-3">
+                    <i class="fa-solid fa-building-columns text-emerald-600"></i> ૨. બેંક ખાતાની વિગત (Bank Details)
+                </h3>
+                <form id="bankForm" onsubmit="saveBankDetails(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">બેંકનું નામ</label>
+                            <input type="text" id="bnkName" required class="w-full border rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="દા.ત. State Bank of India">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">ખાતાનો પ્રકાર</label>
+                            <select id="bnkType" class="w-full border rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50 font-semibold">
+                                <option value="SNA / PFMS">SNA / PFMS ખાતું</option>
+                                <option value="SMC રોકડ">SMC બચત ખાતું</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">ખાતા નંબર (Account No.)</label>
+                            <input type="text" id="bnkAccNo" required class="w-full border rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">IFSC કોડ</label>
+                            <input type="text" id="bnkIfsc" required class="w-full border rounded-xl p-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="SBIN000XXXX">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow">
+                        બેંક ખાતાની વિગત સેવ કરો
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+        <div id="profileDisplayCard" class="bg-slate-900 text-slate-100 p-6 rounded-2xl shadow-xl grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
+            <div>
+                <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2">શાળા પ્રોફાઇલ</h4>
+                <p class="text-lg font-black" id="dspSchName">-</p>
+                <p class="text-xs text-slate-400 mt-1">ડાયસ કોડ: <span id="dspSchDise" class="text-white font-mono">-</span> | પે સેન્ટર: <span id="dspSchPay" class="text-white">-</span></p>
+                <p class="text-xs text-slate-400">સ્થળ: <span id="dspSchTaluka" class="text-white">-</span></p>
+            </div>
+            <div class="border-t md:border-t-0 md:border-l border-slate-700 pt-4 md:pt-0 md:pl-6">
+                <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">એક્ટિવ બેંક એકાઉન્ટ</h4>
+                <p class="text-lg font-black" id="dspBnkName">-</p>
+                <p class="text-xs text-slate-400 mt-1">ખાતા પ્રકાર: <span id="dspBnkType" class="text-white font-semibold">-</span></p>
+                <p class="text-xs text-slate-400">એકાઉન્ટ નં: <span id="dspBnkAcc" class="text-white font-mono">-</span> | IFSC: <span id="dspBnkIfsc" class="text-white font-mono">-</span></p>
+            </div>
+        </div>
+
+        <div class="bg-white border p-6 rounded-2xl card-shadow space-y-6">
+            <h3 class="text-lg font-black text-slate-800 flex items-center gap-2 border-b pb-3">
+                <i class="fa-solid fa-gift text-amber-500"></i> ૩. નવી ગ્રાન્ટ ફાળવણી એન્ટ્રી (Grant Allocation Master)
+            </h3>
+            <form id="grantSetupForm" onsubmit="addGrantMaster(event)" class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-4 items-end">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">તારીખ</label>
+                    <input type="date" id="gntDate" required class="w-full border rounded-xl p-2 text-sm outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">ગ્રાન્ટ મોડ / સિસ્ટમ</label>
+                    <select id="gntModule" class="w-full border rounded-xl p-2 text-sm outline-none bg-slate-50 font-semibold">
+                        <option value="PFMS">PFMS મોડ</option>
+                        <option value="SMC">SMC મોડ</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">ગ્રાન્ટનું નામ / હેડ</label>
+                    <input type="text" id="gntHead" required class="w-full border rounded-xl p-2 text-sm outline-none" placeholder="દા.ત. કમ્પોઝીટ ગ્રાન્ટ">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">મંજૂર થયેલ રકમ (₹)</label>
+                    <input type="number" id="gntAmount" required class="w-full border rounded-xl p-2 text-sm outline-none" placeholder="0.00">
+                </div>
+                <div>
+                    <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 rounded-xl text-sm transition shadow flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-plus"></i> ઉમેરો
+                    </button>
+                </div>
+            </form>
+
+            <div class="overflow-x-auto pt-4">
+                <table class="w-full">
+                    <thead>
+                        <tr>
+                            <th>તારીખ</th>
+                            <th>મોડ</th>
+                            <th>ગ્રાન્ટનો હેડ (Component)</th>
+                            <th>કુલ મળેલ ફાળવણી રકમ (₹)</th>
+                            <th>એક્શન</th>
+                        </tr>
+                    </thead>
+                    <tbody id="grantMasterTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 text-center p-4 text-xs mt-auto">
+        &copy; 2026 GrantTrack Pro Engine. All Master Entries Saved in SQLite.
+    </footer>
+
+    <script>
+        let masterSchoolProfile = null;
+        let masterBankDetails = null;
+        let grantMasterList = [];
+
+        // પેજ લોડ થતા જ SQLite માંથી ડેટા ખેંચી લાવવો
+        window.addEventListener('DOMContentLoaded', loadAllMasterData);
+
+        async function loadAllMasterData() {
+            try {
+                const response = await fetch('/api/master');
+                if (!response.ok) throw new Error('Master data sync failed');
+                const data = await response.json();
+                const migrated = await migrateLocalMasterData(data);
+                if (migrated) {
+                    return loadAllMasterData();
+                }
+                masterSchoolProfile = data.school || null;
+                masterBankDetails = data.bank || null;
+                grantMasterList = data.grants || [];
+                loadSchoolProfile();
+                loadBankDetails();
+                renderGrantMasterTable();
+            } catch (error) {
+                console.error(error);
+                alert("Database connection error. Server ચાલુ છે કે નહીં તે ચેક કરો.");
+                renderGrantMasterTable();
+            }
+        }
+
+        async function migrateLocalMasterData(serverData) {
+            const localSchool = JSON.parse(localStorage.getItem('master_school_profile') || 'null');
+            const localBank = JSON.parse(localStorage.getItem('master_bank_details') || 'null');
+            const localGrants = JSON.parse(localStorage.getItem('master_grant_list') || '[]');
+            let migrated = false;
+
+            if (!serverData.school && localSchool) {
+                await fetch('/api/master/school', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(localSchool)
+                });
+                localStorage.removeItem('master_school_profile');
+                migrated = true;
+            }
+
+            if (!serverData.bank && localBank) {
+                await fetch('/api/master/bank', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(localBank)
+                });
+                localStorage.removeItem('master_bank_details');
+                migrated = true;
+            }
+
+            if ((!serverData.grants || serverData.grants.length === 0) && localGrants.length > 0) {
+                for (const grant of localGrants) {
+                    await fetch('/api/master/grants', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(grant)
+                    });
+                }
+                localStorage.removeItem('master_grant_list');
+                migrated = true;
+            }
+
+            return migrated;
+        }
+
+        // ૧. શાળા પ્રોફાઇલ સેવ અને લોડ ફંક્શન
+        async function saveSchoolProfile(e) {
+            e.preventDefault();
+            const schoolData = {
+                name: document.getElementById('schName').value,
+                dise: document.getElementById('schDise').value,
+                block: document.getElementById('schBlock').value,
+                cluster: document.getElementById('schCluster').value,
+                paycenter: document.getElementById('schPaycenter').value,
+                taluka: document.getElementById('schTaluka').value
+            };
+            const response = await fetch('/api/master/school', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(schoolData)
+            });
+            if (!response.ok) {
+                alert("શાળાની વિગતો database માં save થઈ નથી.");
+                return;
+            }
+            const result = await response.json();
+            masterSchoolProfile = result.school;
+            loadSchoolProfile();
+            alert("શાળાની વિગતો સફળતાપૂર્વક સેવ થઈ ગઈ છે!");
+        }
+
+        function loadSchoolProfile() {
+            const data = masterSchoolProfile;
+            if(data) {
+                document.getElementById('schName').value = data.name;
+                document.getElementById('schDise').value = data.dise;
+                document.getElementById('schBlock').value = data.block || '';
+                document.getElementById('schCluster').value = data.cluster || '';
+                document.getElementById('schPaycenter').value = data.paycenter;
+                document.getElementById('schTaluka').value = data.taluka;
+                
+                document.getElementById('dspSchName').innerText = data.name;
+                document.getElementById('dspSchDise').innerText = data.dise;
+                document.getElementById('dspSchPay').innerText = data.paycenter;
+                document.getElementById('dspSchTaluka').innerText = data.taluka;
+                document.getElementById('profileDisplayCard').classList.remove('hidden');
+            }
+        }
+
+        // ૨. બેંક ખાતાની વિગત સેવ અને લોડ ફંક્શન
+        async function saveBankDetails(e) {
+            e.preventDefault();
+            const bankData = {
+                name: document.getElementById('bnkName').value,
+                type: document.getElementById('bnkType').value,
+                accNo: document.getElementById('bnkAccNo').value,
+                ifsc: document.getElementById('bnkIfsc').value
+            };
+            const response = await fetch('/api/master/bank', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bankData)
+            });
+            if (!response.ok) {
+                alert("બેંક માહિતી database માં save થઈ નથી.");
+                return;
+            }
+            const result = await response.json();
+            masterBankDetails = result.bank;
+            loadBankDetails();
+            alert("બેંક ખાતાની માહિતિ સેવ થઈ ગઈ છે!");
+        }
+
+        function loadBankDetails() {
+            const data = masterBankDetails;
+            if(data) {
+                document.getElementById('bnkName').value = data.name;
+                document.getElementById('bnkType').value = data.type;
+                document.getElementById('bnkAccNo').value = data.accNo;
+                document.getElementById('bnkIfsc').value = data.ifsc;
+                
+                document.getElementById('dspBnkName').innerText = data.name;
+                document.getElementById('dspBnkType').innerText = data.type;
+                document.getElementById('dspBnkAcc').innerText = data.accNo;
+                document.getElementById('dspBnkIfsc').innerText = data.ifsc;
+                document.getElementById('profileDisplayCard').classList.remove('hidden');
+            }
+        }
+
+        // ૩. ગ્રાન્ટ માસ્ટર એન્ટ્રી ઉમેરવી અને ટેબલ અપડેટ કરવું
+        async function addGrantMaster(e) {
+            e.preventDefault();
+            const newGrant = {
+                id: Date.now(),
+                date: document.getElementById('gntDate').value.split('-').reverse().join('-'),
+                module: document.getElementById('gntModule').value,
+                head: document.getElementById('gntHead').value,
+                amount: parseFloat(document.getElementById('gntAmount').value)
+            };
+
+            const response = await fetch('/api/master/grants', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newGrant)
+            });
+            if (!response.ok) {
+                alert("ગ્રાન્ટ એન્ટ્રી database માં save થઈ નથી.");
+                return;
+            }
+            const result = await response.json();
+            grantMasterList = result.grants || [];
+            
+            document.getElementById('gntHead').value = '';
+            document.getElementById('gntAmount').value = '';
+            
+            renderGrantMasterTable();
+        }
+
+        async function deleteGrantMaster(id) {
+            if(confirm("શું તમે આ ગ્રાન્ટની એન્ટ્રી કાઢી નાખવા માંગો છો?")) {
+                const response = await fetch(`/api/master/grants/${id}`, { method: 'DELETE' });
+                if (!response.ok) {
+                    alert("ગ્રાન્ટ એન્ટ્રી delete થઈ નથી.");
+                    return;
+                }
+                const result = await response.json();
+                grantMasterList = result.grants || [];
+                renderGrantMasterTable();
+            }
+        }
+
+        function renderGrantMasterTable() {
+            const gntList = grantMasterList;
+            const tbody = document.getElementById('grantMasterTableBody');
+            tbody.innerHTML = '';
+
+            if(gntList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-slate-400 py-6 italic">હજુ સુધી કોઈ ગ્રાન્ટ ફાળવણી એન્ટ્રી ઉમેરેલી નથી.</td></tr>`;
+                return;
+            }
+
+            gntList.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.date}</td>
+                    <td><span class="px-2 py-0.5 rounded text-xs font-bold ${item.module === 'PFMS' ? 'bg-indigo-100 text-indigo-700' : 'bg-blue-100 text-blue-700'}">${item.module}</span></td>
+                    <td class="text-left font-semibold">${item.head}</td>
+                    <td class="font-bold text-slate-800">₹${item.amount.toLocaleString('en-IN')}</td>
+                    <td>
+                        <button onclick="deleteGrantMaster(${item.id})" class="text-red-500 hover:text-red-700 transition">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // બધો ડેટા સાફ કરવાનું મેઈન ફંક્શન
+        function clearAllData() {
+            if(confirm("ચેતવણી: આનાથી શાળા, બેંક અને ગ્રાન્ટનો આ પેજનો બધો જ લોકલ ડેટા સાફ થઈ જશે. શું આગળ વધવું છે?")) {
+                fetch('/api/master', { method: 'DELETE' });
+                masterSchoolProfile = null;
+                masterBankDetails = null;
+                grantMasterList = [];
+                document.getElementById('schoolForm').reset();
+                document.getElementById('bankForm').reset();
+                document.getElementById('profileDisplayCard').classList.add('hidden');
+                renderGrantMasterTable();
+            }
+        }
+    </script>
+</body>
+</html>

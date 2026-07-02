@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrantTrack Pro - Live Records</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .header-gradient { 
+            background: linear-gradient(135deg, #1b2d55, #1845c2); 
+        }
+        .hero-gradient { 
+            background: radial-gradient(circle at top right, rgba(24, 69, 194, 0.05), transparent); 
+        }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .neo-shadow {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1845c2, #10b981);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900 hero-gradient">
+ 
+    <header class="header-gradient text-white p-6 shadow-xl sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            
+            <div class="flex items-center gap-3">
+                <div id="text-logo">
+                    <h1 class="text-3xl font-extrabold tracking-tight">GrantTrack Pro</h1>
+                </div>
+                <div class="hidden sm:block border-l border-white/20 pl-3 ml-1">
+                    <p class="text-xs uppercase tracking-widest opacity-80 mt-1 font-bold">Live Records Suite</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center">
+                <a href="Dashboard.html" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-5 py-2.5 rounded-xl font-bold transition shadow-md flex items-center gap-2 transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Back to Dashboard
+                </a>
+            </div>
+            
+        </div>
+    </header>
+ 
+    <main class="flex-grow max-w-7xl mx-auto w-full p-6 my-6 space-y-8">
+        
+        <section class="glass-card p-6 rounded-3xl border border-slate-100 neo-shadow flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div class="space-y-1">
+                <h2 class="text-2xl font-black text-slate-800 tracking-tight">School Ledger Selector</h2>
+                <p class="text-slate-500 text-sm">Select a school to view current balances required for Cashbook, General Accounts, and audit updates.</p>
+            </div>
+            
+            <div class="w-full md:w-72">
+                <label for="schoolSelect" class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Filter Current School</label>
+                <select id="schoolSelect" onchange="loadSchoolSpecificData()" class="w-full bg-white border border-slate-200 text-slate-700 px-4 py-3 rounded-xl font-medium focus:outline-none focus:border-blue-500 transition shadow-sm cursor-pointer">
+                    <option value="">Loading Active Schools...</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="glass-card p-6 rounded-3xl border border-slate-100 neo-shadow space-y-2">
+                <p class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-blue-500"></span> Total Allocated Grant
+                </p>
+                <p id="allocatedDisplay" class="text-2xl font-black text-slate-800">₹ 0.00</p>
+                <p class="text-xs text-slate-400">Total institutional matrix assigned</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-3xl border border-slate-100 neo-shadow space-y-2">
+                <p class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-purple-500"></span> SMC Component Pool
+                </p>
+                <p id="smcDisplay" class="text-2xl font-black text-slate-800">₹ 0.00</p>
+                <p class="text-xs text-slate-400">School Management Committee allocation</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-3xl border border-slate-100 neo-shadow space-y-2">
+                <p class="text-xs font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span> Education Department Pool
+                </p>
+                <p id="educationDisplay" class="text-2xl font-black text-slate-800">₹ 0.00</p>
+                <p class="text-xs text-slate-400">Direct Departmental sanction cash</p>
+            </div>
+
+            <div class="glass-card p-6 rounded-3xl border border-slate-100 neo-shadow space-y-2 bg-gradient-to-br from-emerald-50/50 to-emerald-100/30 border-emerald-200">
+                <p class="text-xs font-bold uppercase tracking-widest text-emerald-600 flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-600 animate-pulse"></span> Net Cashbook Balance
+                </p>
+                <p id="netCashbookDisplay" class="text-2xl font-black text-emerald-800">₹ 0.00</p>
+                <p class="text-xs text-emerald-600 font-medium">Ready for general accounting injection</p>
+            </div>
+
+        </section>
+
+        <section class="glass-card rounded-3xl border border-slate-100 neo-shadow overflow-hidden">
+            <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white/50">
+                <div class="space-y-0.5">
+                    <h3 class="text-lg font-black text-slate-800">Active Voucher Logs</h3>
+                    <p class="text-xs text-slate-400">Real-time accounting entries for the selected educational institute</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span id="recordCountBadge" class="bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-full border border-blue-100">0 Entries Found</span>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-100 bg-slate-50/70 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                            <th class="p-4">Transaction / UDISE Ref</th>
+                            <th class="p-4">Component Group</th>
+                            <th class="p-4">IFSC / Account Metadata</th>
+                            <th class="p-4 text-right">Sanctioned Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="liveRecordsTableBody" class="divide-y divide-slate-100 text-sm">
+                        <tr>
+                            <td colspan="4" class="p-8 text-center text-slate-400 font-medium">Please select a school from the dropdown filter above to extract active ledger summaries.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+ 
+    </main>
+ 
+    <footer class="bg-slate-900 text-slate-400 p-6 text-center mt-auto border-t border-slate-800">
+        <div class="max-w-7xl mx-auto space-y-2">
+            <p class="text-sm font-bold text-white">&copy; 2026 GrantTrack Pro. All rights reserved.</p>
+            <p class="text-xs text-slate-500">Designed for modern compliance administration and smart organizational grant accounting frameworks.</p>
+        </div>
+    </footer>
+
+    <script>
+        let cachedRecordsArray = [];
+
+        // Dynamic API Fetch Sync Engine
+        async function loadLiveRecordsEngine() {
+            try {
+                const response = await fetch('/api/records');
+                if (!response.ok) throw new Error('API Sync Failed');
+                const data = await response.json();
+                
+                cachedRecordsArray = data.records || [];
+                
+                // Populate Dropdown Options
+                const selector = document.getElementById('schoolSelect');
+                if(cachedRecordsArray.length === 0) {
+                    selector.innerHTML = '<option value="">No Active Schools Available</option>';
+                    return;
+                }
+
+                let selectorOptions = '<option value="">-- Choose School Record --</option>';
+                cachedRecordsArray.forEach((school, index) => {
+                    selectorOptions += `<option value="${index}">${escapeHtml(school.name)} (${escapeHtml(school.code)})</option>`;
+                });
+                selector.innerHTML = selectorOptions;
+
+            } catch (error) {
+                console.error("Live Record Matrix Error:", error);
+                document.getElementById('schoolSelect').innerHTML = '<option value="">❌ System Connection Error</option>';
+            }
+        }
+
+        // Dropdown Execution Logic mapping values to cashbook targets
+        function loadSchoolSpecificData() {
+            const selectedIdx = document.getElementById('schoolSelect').value;
+            const tableBody = document.getElementById('liveRecordsTableBody');
+            const badge = document.getElementById('recordCountBadge');
+            
+            if (selectedIdx === "") {
+                resetMetrics();
+                tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-400 font-medium">Please select a school from the dropdown filter above to extract active ledger summaries.</td></tr>`;
+                badge.innerText = "0 Entries Found";
+                return;
+            }
+
+            const activeSchool = cachedRecordsArray[selectedIdx];
+            let allocatedTotal = 0;
+            let smcTotal = 0;
+            let educationTotal = 0;
+            let rowsHtml = "";
+
+            if (activeSchool.entries && activeSchool.entries.length > 0) {
+                badge.innerText = `${activeSchool.entries.length} Entries Found`;
+                
+                activeSchool.entries.forEach(entry => {
+                    let amt = parseFloat(entry.amount || 0);
+                    if (isNaN(amt)) amt = 0;
+                    allocatedTotal += amt;
+
+                    const sec = entry.section || 'General';
+                    if (sec === 'SMC') smcTotal += amt;
+                    else if (sec === 'Education') educationTotal += amt;
+
+                    rowsHtml += `
+                        <tr class="hover:bg-slate-50/80 transition duration-150">
+                            <td class="p-4">
+                                <div class="font-bold text-slate-800">${escapeHtml(activeSchool.name)}</div>
+                                <div class="text-xs text-slate-400 font-mono mt-0.5">UDISE: ${escapeHtml(activeSchool.code)}</div>
+                            </td>
+                            <td class="p-4">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold border ${
+                                    sec === 'SMC' ? 'bg-purple-50 text-purple-700 border-purple-100' : 'bg-blue-50 text-blue-700 border-blue-100'
+                                } uppercase">${escapeHtml(sec)}</span>
+                            </td>
+                            <td class="p-4">
+                                <div class="text-slate-600 font-semibold text-xs">${escapeHtml(entry.ifsc || 'N/A')}</div>
+                                <div class="text-[11px] text-slate-400 mt-0.5">Type: ${escapeHtml(activeSchool.grantType || 'General')}</div>
+                            </td>
+                            <td class="p-4 text-right font-black text-slate-800">₹ ${amt.toLocaleString('en-IN', {minimumFractionDigits: 2})}</td>
+                        </tr>
+                    `;
+                });
+                tableBody.innerHTML = rowsHtml;
+            } else {
+                badge.innerText = "0 Entries Found";
+                tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-amber-600 font-bold bg-amber-50/50">⚠ No sub-component entries registered for this school record yet.</td></tr>`;
+            }
+
+            // Update Dynamic Counters
+            document.getElementById('allocatedDisplay').innerText = "₹ " + allocatedTotal.toLocaleString('en-IN', {minimumFractionDigits: 2});
+            document.getElementById('smcDisplay').innerText = "₹ " + smcTotal.toLocaleString('en-IN', {minimumFractionDigits: 2});
+            document.getElementById('educationDisplay').innerText = "₹ " + educationTotal.toLocaleString('en-IN', {minimumFractionDigits: 2});
+            document.getElementById('netCashbookDisplay').innerText = "₹ " + allocatedTotal.toLocaleString('en-IN', {minimumFractionDigits: 2});
+            
+            // Shared instance array backup for Cashbook injection scripts integration
+            localStorage.setItem('activeCashbookCalculationTarget', JSON.stringify(activeSchool));
+        }
+
+        function resetMetrics() {
+            document.getElementById('allocatedDisplay').innerText = "₹ 0.00";
+            document.getElementById('smcDisplay').innerText = "₹ 0.00";
+            document.getElementById('educationDisplay').innerText = "₹ 0.00";
+            document.getElementById('netCashbookDisplay').innerText = "₹ 0.00";
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.toString()
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Run Engine on load
+        window.addEventListener('DOMContentLoaded', loadLiveRecordsEngine);
+    </script>
+</body>
+</html>

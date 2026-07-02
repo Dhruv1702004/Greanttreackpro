@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrantTrack Pro - Smart Grant Management Platform</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .header-gradient { 
+            background: linear-gradient(135deg, #1b2d55, #1845c2); 
+        }
+        .hero-gradient { 
+            background: radial-gradient(circle at top right, rgba(24, 69, 194, 0.05), transparent); 
+        }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .neo-shadow {
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1845c2, #10b981);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col font-sans text-slate-900 hero-gradient">
+ 
+    <header class="header-gradient text-white p-6 shadow-xl sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            
+            <div class="flex items-center gap-3">
+                <div id="text-logo">
+                    <h1 class="text-3xl font-extrabold tracking-tight">GrantTrack Pro</h1>
+                </div>
+                <div class="hidden sm:block border-l border-white/20 pl-3 ml-1">
+                    <p class="text-xs uppercase tracking-widest opacity-80 mt-1 font-bold">Smart Allocation</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center">
+                <a href="Dashboard.html" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-6 py-2.5 rounded-xl font-bold transition shadow-md flex items-center gap-2 transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-chart-line" aria-hidden="true"></i> Dashboard
+                </a>
+            </div>
+            
+        </div>
+    </header>
+ 
+    <main class="flex-grow max-w-7xl mx-auto w-full p-6 my-6 space-y-12">
+        
+        <section class="text-center py-12 space-y-4 max-w-3xl mx-auto">
+            <span class="bg-blue-50 text-blue-700 text-xs font-black tracking-widest uppercase px-4 py-1.5 rounded-full border border-blue-100">
+                Institutional Fund Analytics Dashboard
+            </span>
+            <h2 class="text-4xl md:text-5xl font-black text-slate-800 tracking-tight leading-tight">
+                Empowering Schools with <br><span class="gradient-text">Transparent Grant Tracking</span>
+            </h2>
+            <p class="text-slate-500 text-lg md:text-xl font-medium leading-relaxed">
+                A unified administrative console meticulously built to monitor, audit, and strategically distribute educational resources across registered sectors effortlessly.
+            </p>
+        </section>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <article class="glass-card p-8 rounded-3xl border border-slate-100 neo-shadow space-y-4 group hover:border-blue-500/30 transition-all duration-300">
+                <div class="h-12 w-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-xl font-black text-slate-800">Dynamic Multi-Sectors</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">
+                    Organize institutional allocations logically. Track distinct budgetary streams like School Management Committee (SMC) grants and direct State Board funds simultaneously using standardized UDISE criteria.
+                </p>
+            </article>
+ 
+            <article class="glass-card p-8 rounded-3xl border border-slate-100 neo-shadow space-y-4 group hover:border-emerald-500/30 transition-all duration-300">
+                <div class="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-chart-pie" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-xl font-black text-slate-800">Visual Insights Engine</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">
+                    Convert rows of numerical data into easy-to-read charts. Fully equipped with multi-color category doughnut summaries and bar charts powered directly via clean Chart.js libraries.
+                </p>
+            </article>
+ 
+            <article class="glass-card p-8 rounded-3xl border border-slate-100 neo-shadow space-y-4 group hover:border-amber-500/30 transition-all duration-300">
+                <div class="h-12 w-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl group-hover:bg-amber-600 group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-xl font-black text-slate-800">Secure Processing</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">
+                    Engineered from the ground up for strict records verification. Features complete inline input pattern filters, local browser storage integration arrays, and built-in text sanitization modules.
+                </p>
+            </article>
+            
+        </section>
+
+        <section class="bg-white p-8 rounded-3xl border border-slate-100 neo-shadow p-8 text-center max-w-2xl mx-auto space-y-2">
+            <h4 class="text-lg font-bold text-slate-800">Ready to audit capital allocations?</h4>
+            <p class="text-slate-500 text-sm leading-relaxed">
+                Use the navigation access button pinned at the top right header area of your window to pull up the primary dashboard engine and evaluate dynamic financial compliance logs instantly.
+            </p>
+        </section>
+ 
+    </main>
+ 
+    <footer class="bg-slate-900 text-slate-400 p-6 text-center mt-auto border-t border-slate-800">
+        <div class="max-w-7xl mx-auto space-y-2">
+            <p class="text-sm font-bold text-white">&copy; 2026 GrantTrack Pro. All rights reserved.</p>
+            <p class="text-xs text-slate-500">Designed for modern compliance administration and smart organizational grant accounting frameworks.</p>
+        </div>
+    </footer>
+ 
+</body>
+</html>
