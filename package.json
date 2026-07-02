@@ -1,0 +1,17 @@
+{
+  "name": "granttrack-pro",
+  "version": "1.0.0",
+  "description": "GrantTrack Pro - School Grant Management",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "sqlite3": "^5.1.7"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}
+
