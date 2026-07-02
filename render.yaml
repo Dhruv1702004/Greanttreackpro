@@ -3,6 +3,32 @@ services:
     name: granttrack-pro
     runtime: node
     plan: free
-    buildCommand: npm install
+    region: oregon
+    branch: main
+    buildCommand: npm ci
     startCommand: npm start
     healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 22.x
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_PATH
+        value: /opt/render/project/src/data/database.sqlite
+
+    # ⚠️ SQLite par IMPORTANT NOTE:
+    # Render ke free/starter plans par filesystem ephemeral hota hai —
+    # har deploy, restart, ya spin-down/spin-up cycle par saara local disk data
+    # (aapki sqlite3 .db file samet) DELETE ho jayega.
+    # Agar production data persist karna hai to do options hain:
+    #   1. Paid plan lekar "disk:" section add karein (neeche commented example)
+    #   2. Ya better: SQLite se hatke Render ka managed PostgreSQL use karein
+    #      (free tier available hai, databases: block neeche hai)
+    #
+    # disk:
+    #   name: granttrack-data
+    #   mountPath: /opt/render/project/src/data
+    #   sizeGB: 1
